@@ -59,8 +59,8 @@ bool OleStorage::init(shared_ptr<ZLInputStream> stream, std::size_t streamSize) 
 		clear();
 		return false;
 	}
-	static const char OLE_SIGN[] = {0xD0, 0xCF, 0x11, 0xE0, 0xA1, 0xB1, 0x1A, 0xE1, 0};
-	if (std::strncmp(oleBuf, OLE_SIGN, 8) != 0) {
+	static const unsigned char OLE_SIGN[] = {0xD0, 0xCF, 0x11, 0xE0, 0xA1, 0xB1, 0x1A, 0xE1, 0};
+	if (std::strncmp(oleBuf, (const char *) OLE_SIGN, 8) != 0) {
 		clear();
 		return false;
 	}

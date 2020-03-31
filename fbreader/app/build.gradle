@@ -24,6 +24,7 @@ dependencies {
 }
 
 android {
+	useLibrary 'org.apache.http.legacy'
 	compileSdkVersion 28
 	buildToolsVersion '28.0.3'
 
@@ -81,15 +82,8 @@ android {
 		fat {
 			dimension 'abi'
 			ndk {
-				abiFilters 'x86', 'armeabi-v7a', 'armeabi'
+				abiFilters 'x86', 'armeabi-v7a'
 				versionCode 0
-			}
-		}
-		arm {
-			dimension 'abi'
-			ndk {
-				abiFilter 'armeabi'
-				versionCode 1
 			}
 		}
 		armv7a {
