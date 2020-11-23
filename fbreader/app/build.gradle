@@ -70,7 +70,7 @@ android {
 
 	applicationVariants.all { variant ->
 		def generateHelpTask = project.tasks.create "generateHelp${variant.name.capitalize()}", Exec
-		generateHelpTask.commandLine('src/main/help/generate.py', 'src/main/help/proto', 'src/main/help/html', 'build/data/intro')
+		generateHelpTask.commandLine('python', 'src/main/help/generate.py', 'src/main/help/proto', 'src/main/help/html', 'build/data/intro')
 		variant.mergeResources.dependsOn(generateHelpTask)
 	}
 }

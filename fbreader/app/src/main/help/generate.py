@@ -1,13 +1,15 @@
-#!/usr/bin/python2
+#!/usr/bin/env python
 
 import os, re, shutil, sys, time, zipfile
+import io
+
 
 def collect_languages(proto_dir):
     return [os.path.splitext(name)[0] for name in os.listdir(proto_dir) if name.endswith('.html')]
 
 def find_title(path):
     pattern = re.compile(r'<h2>(.*)<\/h2>')
-    with open(path, 'r') as stream:
+    with io.open(path, encoding='utf-8') as stream:
         for line in stream:
             match = pattern.match(line)
             if match:
@@ -17,7 +19,7 @@ def find_title(path):
 def string_from_template(template_path, data):
     result = ''
     pattern = re.compile(r'(.*)\$([^$]*)\$(.*\n)')
-    with open(template_path, 'r') as istream:
+    with io.open(template_path, encoding='utf-8') as istream:
         for line in istream:
             match = pattern.match(line)
             if match:
@@ -30,7 +32,7 @@ def generate_epub(proto_dir, html_dir, epub, lang):
     html_file = os.path.join(html_dir, lang + '.html')
     title = find_title(html_file)
     if not title:
-        raise Exception('Title not found in %s' % htmlfile)
+        raise Exception('Title not found in %s' % html_file)
 
     data = {
         'TITLE': title,
@@ -63,5 +65,5 @@ if __name__ == '__main__':
         epub = os.path.join(output_dir, 'intro-' + lang + '.epub')
         if os.path.exists(epub):
             os.remove(epub)
-        print 'Generating intro for language %s...' % lang
+        print('Generating intro for language %s...' % lang)
         generate_epub(proto_dir, html_dir, epub, lang)
